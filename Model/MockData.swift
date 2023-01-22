@@ -30,10 +30,10 @@ struct MockData {
     }()
     
     private let comingSoon: ListSection = {
-        .comingSoon([.init(title: "The Three-Body Problem", image: "soon-1"),
-                     .init(title: "Fallout", image: "soon-2"),
-                     .init(title: "Alien", image: "soon-3"),
-                     .init(title: "The Ark", image: "soon-4"),
+        .comingSoon([.init(title: "Fallout", image: "soon-1"),
+                     .init(title: "Alien", image: "soon-2"),
+                     .init(title: "The Ark", image: "soon-3"),
+                     .init(title: "The Three-Body Problem", image: "soon-4"),
                      .init(title: "Hello Tomorrow!", image: "soon-5")])
     }()
     
