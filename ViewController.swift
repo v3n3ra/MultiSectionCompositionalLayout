@@ -23,50 +23,32 @@ class ViewController: UIViewController {
             let section = self.sections[sectionIndex]
             switch section {
             case .stories:
-                //item
-                let item = NSCollectionLayoutItem(layoutSize: .init(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(1)))
-                //group
-                let group = NSCollectionLayoutGroup.horizontal(layoutSize: .init(widthDimension: .absolute(70), heightDimension: .absolute(70)), subitems: [item])
-                //section
-                let section = NSCollectionLayoutSection(group: group)
-                section.orthogonalScrollingBehavior = .continuous
-                section.interGroupSpacing = 10
-                section.contentInsets = .init(top: 0, leading: 10, bottom: 0, trailing: 10)
-                section.boundarySupplementaryItems = [self.supplementaryHeaderItem()]
-                //                section.supplementariesFollowContentInsets = false
-                
-                return section
+                return self.createLayoutHelper(groupWidthDimension: .absolute(70), groupHeightDimension: .absolute(70), sectionScrollBehavior: .continuous)
             case .popular:
-                //item
-                let item = NSCollectionLayoutItem(layoutSize: .init(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(1)))
-                //group
-                let group = NSCollectionLayoutGroup.horizontal(layoutSize: .init(widthDimension: .fractionalWidth(0.85), heightDimension: .fractionalHeight(0.6)), subitems: [item])
-                //section
-                let section = NSCollectionLayoutSection(group: group)
-                
-                section.orthogonalScrollingBehavior = .groupPagingCentered
-                section.interGroupSpacing = 10
-                section.contentInsets = .init(top: 0, leading: 10, bottom: 0, trailing: 10)
-                section.boundarySupplementaryItems = [self.supplementaryHeaderItem()]
-                return section
+                return self.createLayoutHelper(groupWidthDimension: .fractionalWidth(0.85), groupHeightDimension: .fractionalHeight(0.6), sectionScrollBehavior: .groupPagingCentered)
             case .comingSoon:
-                let item = NSCollectionLayoutItem(layoutSize: .init(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(1)))
-                //group
-                let group = NSCollectionLayoutGroup.horizontal(layoutSize: .init(widthDimension: .absolute(160), heightDimension: .absolute(100)), subitems: [item])
-                //section
-                let section = NSCollectionLayoutSection(group: group)
-                
-                section.orthogonalScrollingBehavior = .continuousGroupLeadingBoundary
-                section.interGroupSpacing = 10
-                section.contentInsets = .init(top: 0, leading: 10, bottom: 0, trailing: 10)
-                section.boundarySupplementaryItems = [self.supplementaryHeaderItem()]
-                return section
+                return self.createLayoutHelper(groupWidthDimension: .absolute(180), groupHeightDimension: .absolute(100), sectionScrollBehavior: .continuousGroupLeadingBoundary)
             }
         }
     }
     
     private func supplementaryHeaderItem() -> NSCollectionLayoutBoundarySupplementaryItem {
         .init(layoutSize: .init(widthDimension: .fractionalWidth(1), heightDimension: .estimated(100)), elementKind: UICollectionView.elementKindSectionHeader, alignment: .top)
+    }
+    
+    private func createLayoutHelper(groupWidthDimension: NSCollectionLayoutDimension, groupHeightDimension: NSCollectionLayoutDimension, sectionScrollBehavior: UICollectionLayoutSectionOrthogonalScrollingBehavior) -> NSCollectionLayoutSection {
+        //item
+        let item = NSCollectionLayoutItem(layoutSize: .init(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(1)))
+        //group
+        let group = NSCollectionLayoutGroup.horizontal(layoutSize: .init(widthDimension: groupWidthDimension, heightDimension: groupHeightDimension), subitems: [item])
+        //section
+        let section = NSCollectionLayoutSection(group: group)
+        section.orthogonalScrollingBehavior = sectionScrollBehavior
+        section.interGroupSpacing = 10
+        section.contentInsets = .init(top: 0, leading: 10, bottom: 0, trailing: 10)
+        section.boundarySupplementaryItems = [self.supplementaryHeaderItem()]
+        
+        return section
     }
 }
 
@@ -108,8 +90,6 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource {
             return UICollectionReusableView()
         }
     }
-    
-    
 }
 
 
